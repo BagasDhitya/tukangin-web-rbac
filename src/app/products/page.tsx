@@ -1,6 +1,11 @@
+import { getServerSession } from "next-auth"
+
 import CheckoutButton from "@/components/CheckoutButton"
 import { backendless } from "@/lib/api/axios"
 import { getAuth } from '@/lib/cookie/auth'
+
+import { authOptions } from "../api/auth/[...nextauth]/route"
+import { redirect } from "next/navigation"
 
 interface IProduct {
     objectId: string,
@@ -15,6 +20,11 @@ export default async function Products() {
     const res = await backendless.get('/data/products')
     const data = await getAuth()
     const product: IProduct[] = res.data
+
+    const session = await getServerSession(authOptions)
+
+    console.log('session expires : ', session?.expires)
+    console.log('session user : ', session?.user)
 
     return (
         <div className="p-6">

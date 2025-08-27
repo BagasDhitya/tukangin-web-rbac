@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AuthForm, authSchema } from "@/lib/schema/authSchema"
 
+import { signIn } from "next-auth/react"
+
 export default function Register() {
     const router = useRouter()
 
@@ -62,6 +64,15 @@ export default function Register() {
                     Register
                 </button>
             </form>
+            <div className="mt-4 text-center">
+                <p className="mb-2">Or register with</p>
+                <button
+                    onClick={() => signIn('google')}
+                    className="bg-red-600 text-white p-2 rounded hover:bg-red-700 w-full"
+                >
+                    Continue with Google
+                </button>
+            </div>
         </div>
     )
 }
