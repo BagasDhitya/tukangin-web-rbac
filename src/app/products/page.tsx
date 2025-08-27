@@ -5,7 +5,6 @@ import { backendless } from "@/lib/api/axios"
 import { getAuth } from '@/lib/cookie/auth'
 
 import { authOptions } from "../api/auth/[...nextauth]/route"
-import { redirect } from "next/navigation"
 
 interface IProduct {
     objectId: string,

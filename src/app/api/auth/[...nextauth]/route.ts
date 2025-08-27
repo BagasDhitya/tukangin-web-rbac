@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from 'next-auth/providers/google'
+import { supabase } from "@/lib/supabase/supabase";
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -20,6 +21,14 @@ export const authOptions: NextAuthOptions = {
         signIn: '/auth/register' // halaman register kita
     },
     callbacks: {
+        async signIn({ user }) {
+            if (user.email) {
+                await supabase.from('logged_users').insert([{
+                    email: user.email
+                }])
+            }
+            return true
+        },
         async redirect({ }) {
             return "/products"
         }
